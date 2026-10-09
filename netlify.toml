@@ -1,0 +1,8 @@
+# Netlify configuration for AI Emergency Response Assistant (Next.js App Router)
+
+[build]
+  command = "npm run build && node scripts/clean-build-cache.js"
+  publish = ".next"
+
+[build.environment]
+  NODE_ENV = "production"

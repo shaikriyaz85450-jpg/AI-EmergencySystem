@@ -570,7 +570,7 @@ export function extractReportDeterministic(
 }
 
 /**
- * Attempts LLM extraction using Gemini API (`gemini-3.8-flash`) if GEMINI_API_KEY is configured in the environment.
+ * Attempts LLM extraction using Gemini API (`gemini-3.8-flash`) if configured in the server environment.
  * Falls back cleanly to deterministic extraction if no key is configured or if the API request fails.
  */
 export async function extractAndClassifyReport(

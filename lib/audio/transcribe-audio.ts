@@ -621,8 +621,7 @@ export async function transcribeAudioServerSide(
     }
   }
 
-  // Part 22: If STT provider is unavailable, DO NOT invent a transcript.
   throw new SttServiceUnavailableError(
-    "No server-side STT provider API key (GEMINI_API_KEY, GROQ_API_KEY, or OPENAI_API_KEY) is configured in .env.local."
+    "No server-side STT provider API key (Gemini, Groq, or OpenAI) is configured in the server environment."
   );
 }

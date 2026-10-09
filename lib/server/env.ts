@@ -1,3 +1,5 @@
+import "server-only";
+
 /**
  * ============================================================================
  * SERVER-ONLY ENVIRONMENT ACCESSOR
@@ -5,9 +7,12 @@
  * Safe, server-only runtime access for sensitive backend secrets.
  *
  * Rules:
- * 1. Must never be imported from any Client Component ("use client").
+ * 1. Enforced with `import "server-only"`; importing from any Client Component
+ *    ("use client") causes an immediate compilation failure.
  * 2. Throws an immediate error if executed in a browser/client environment.
- * 3. Uses dynamic lookup to prevent Turbopack/Next.js from statically capturing
+ * 3. Never evaluates or leaks secret values during static build phase
+ *    (`NEXT_PHASE === "phase-production-build"`).
+ * 4. Uses dynamic bracket lookup to prevent Turbopack/Next.js from statically capturing
  *    or inlining sensitive secret values into build-time compilation caches (.sst).
  * ============================================================================
  */
@@ -21,12 +26,18 @@ function ensureServerContext(): void {
 }
 
 /**
- * Dynamically resolves a server-only environment variable at runtime.
+ * Dynamically resolves a server-only environment variable strictly at request runtime.
  */
 export function getServerSecret(variableName: string): string | undefined {
   ensureServerContext();
 
   if (typeof process === "undefined" || !process.env) {
+    return undefined;
+  }
+
+  // During static site generation / next build compilation phase, never expose secrets
+  // to compilation workers or cache snapshots.
+  if (process.env.NEXT_PHASE === "phase-production-build") {
     return undefined;
   }
 
