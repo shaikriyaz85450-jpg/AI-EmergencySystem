@@ -436,10 +436,8 @@ export function AudioReportPanel({
                     {audioFileUrl ?? selectedFile?.name}
                   </code>
                   ). No fake transcript or fake completed report was created.
-                  Configure <code className="font-mono">GEMINI_API_KEY</code>{" "}
-                  (or <code className="font-mono">GROQ_API_KEY</code> /{" "}
-                  <code className="font-mono">OPENAI_API_KEY</code>) on the
-                  server and retry.
+                  Configure speech-to-text API keys on the server environment
+                  and retry.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-[8px]">

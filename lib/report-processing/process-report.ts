@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { getGeminiApiKey } from "@/lib/server/env";
 import type {
   CorrelationStatus,
   InformationOrigin,
@@ -227,7 +228,7 @@ export async function processAndStoreReport(
       return {
         report: existingTyped,
         display: formatReportForDisplay(existingTyped, codeMap),
-        processing_mode: process.env.GEMINI_API_KEY?.trim()
+        processing_mode: getGeminiApiKey()
           ? "llm_gemini"
           : "deterministic_fallback",
       };

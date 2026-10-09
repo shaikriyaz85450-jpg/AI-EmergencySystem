@@ -2,6 +2,11 @@ import {
   normalizeDetectedLanguage,
   type NormalizedLanguage,
 } from "./transcribe-audio";
+import {
+  getGeminiApiKey,
+  getGroqApiKey,
+  getOpenAiApiKey,
+} from "@/lib/server/env";
 
 export interface TranslationResult {
   englishRendering: string;
@@ -429,9 +434,9 @@ export async function translateToEnglish(
     };
   }
 
-  const geminiKey = process.env.GEMINI_API_KEY?.trim();
-  const groqKey = process.env.GROQ_API_KEY?.trim();
-  const openaiKey = process.env.OPENAI_API_KEY?.trim();
+  const geminiKey = getGeminiApiKey();
+  const groqKey = getGroqApiKey();
+  const openaiKey = getOpenAiApiKey();
 
   if (geminiKey) {
     try {

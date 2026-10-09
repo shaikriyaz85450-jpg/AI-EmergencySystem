@@ -1,4 +1,9 @@
 import type { AudioFormat } from "@/types/database";
+import {
+  getGeminiApiKey,
+  getGroqApiKey,
+  getOpenAiApiKey,
+} from "@/lib/server/env";
 
 export interface NormalizedLanguage {
   /** Lowercase ISO-639 language code (e.g., "en", "ta", "hi", "te", "ml", "bn", "es") */
@@ -546,9 +551,9 @@ export interface TranscribeAudioInput {
 export async function transcribeAudioServerSide(
   input: TranscribeAudioInput
 ): Promise<TranscriptionResult> {
-  const geminiKey = process.env.GEMINI_API_KEY?.trim();
-  const groqKey = process.env.GROQ_API_KEY?.trim();
-  const openaiKey = process.env.OPENAI_API_KEY?.trim();
+  const geminiKey = getGeminiApiKey();
+  const groqKey = getGroqApiKey();
+  const openaiKey = getOpenAiApiKey();
 
   // 1. Primary Provider: Google Gemini 3.5 Transcribe / 3.8 Flash
   if (geminiKey) {

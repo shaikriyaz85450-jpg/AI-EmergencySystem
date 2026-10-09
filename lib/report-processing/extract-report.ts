@@ -3,6 +3,7 @@ import type {
   ReportClassification,
   UrgencyLevel,
 } from "@/types/database";
+import { getGeminiApiKey } from "@/lib/server/env";
 import { normalizeDetectedLanguage } from "@/lib/audio/transcribe-audio";
 import {
   composeGroundedEnglishFallback,
@@ -583,7 +584,7 @@ export async function extractAndClassifyReport(
     options
   );
 
-  const apiKey = process.env.GEMINI_API_KEY?.trim();
+  const apiKey = getGeminiApiKey();
   if (!apiKey) {
     return deterministicBaseline;
   }
